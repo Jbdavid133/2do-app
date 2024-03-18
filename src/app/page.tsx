@@ -1,5 +1,31 @@
 'use client';
 
-export default function Welcome() {
+import styles from './page.module.css';
+import {Box, Card, Heading, Image} from '@wix/design-system';
+import {LoginForm} from '@/app/components/forms/LoginForm/LoginForm';
+import {useRouter} from 'next/navigation';
 
+export default function Welcome() {
+    const router = useRouter();
+
+    const handleLogin = () => {
+        router.push('/home');
+    };
+
+    return (
+        <div className={styles.container}>
+            <Card className={styles.welcomeCard} showShadow={true}>
+                <Box align='center' direction='vertical' gap='40px'>
+                    <Image src='/images/logo.png' transparent={true} width='25%' alt='logo-image'/>
+
+                    <Box align='center' direction='vertical' gap='10px'>
+                        <Heading>Welcome to 2Do</Heading>
+                        <Heading size='tiny'>Enter your details to login</Heading>
+                    </Box>
+
+                    <LoginForm onSubmit={handleLogin} className={styles.loginForm}/>
+                </Box>
+            </Card>
+        </div>
+    );
 }
