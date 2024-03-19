@@ -1,8 +1,10 @@
+import isNil from 'lodash/isNil';
+import assign from 'lodash/assign';
+import isEmpty from 'lodash/isEmpty';
 import {ChangeEvent, useEffect, useState} from 'react';
-import {Dictionary, isEmpty, isNil, merge} from 'lodash';
 
 interface UserInputHookProps<T> {
-    validators?: ((inputValue: T | undefined) => Dictionary<string> | null)[];
+    validators?: ((inputValue: T | undefined) => Record<string, string> | null)[];
 }
 
 export const useInput = <T>(props?: UserInputHookProps<T>) => {
@@ -15,7 +17,7 @@ export const useInput = <T>(props?: UserInputHookProps<T>) => {
         if (touched && !isNil(props?.validators) && !isEmpty(props.validators)) {
             const validatorsErrors = props.validators.map(validator => validator(inputValue)).filter(Boolean);
 
-            setErrors(merge({}, ...validatorsErrors));
+            setErrors(assign({}, ...validatorsErrors));
         }
     }, [inputValue, touched]);
 
