@@ -1,9 +1,10 @@
-import {Box, Button, FormField, Input} from '@wix/design-system';
+import {Box, Button, Input} from '@wix/design-system';
 import {LockLocked, User} from '@wix/wix-ui-icons-common';
 import {FormEvent} from 'react';
 import {useInput} from '@/app/hooks/useInput/useInput';
 import {FormPropsTypes} from '@/app/components/forms/form-props.types';
 import {Validators} from '@/app/hooks/useInput/validators';
+import {BaseFormField} from '@/app/components/forms/FormField/BaseFormField';
 
 export const LoginForm = ({onSubmit, className}: FormPropsTypes<string>) => {
     const usernameInput = useInput<string>({
@@ -12,7 +13,7 @@ export const LoginForm = ({onSubmit, className}: FormPropsTypes<string>) => {
             Validators.MaxLength(15, 'Username mast not be longer than 15 characters')]
     });
     const passwordInput = useInput<string>({validators: [Validators.Required('Password must be provided')]});
-    const isFormValid = usernameInput.touched && usernameInput.isValid && passwordInput.touched && passwordInput.isValid;
+    const isFormValid = usernameInput.isTouched && usernameInput.isValid && passwordInput.isTouched && passwordInput.isValid;
 
     const handleLoginFormSubmit = ($event: FormEvent) => {
         $event.preventDefault();
@@ -28,23 +29,13 @@ export const LoginForm = ({onSubmit, className}: FormPropsTypes<string>) => {
     return <form onSubmit={handleLoginFormSubmit} className={className}>
         <Box direction='vertical' gap='40px'>
             <Box direction='vertical' gap='10px'>
-                <FormField labelId='loginFormUsernameInput'
-                           status={!usernameInput.isValid ? 'error' : undefined}
-                           statusMessage={usernameInput.errors['required'] || usernameInput.errors['maxLength']}>
-                    <Input placeholder='Username' type='text' border='round' size='large'
-                           onBlur={usernameInput.onBlur}
-                           onChange={usernameInput.onChange}
-                           prefix={<Input.IconAffix><User></User></Input.IconAffix>}/>
-                </FormField>
+                <BaseFormField labelId='UsernameFormField' placeholder='Username' type='text' border='round'
+                               size='large' input={usernameInput}
+                               prefix={<Input.IconAffix><User></User></Input.IconAffix>}></BaseFormField>
 
-                <FormField labelId='loginFormPasswordInput'
-                           status={!passwordInput.isValid ? 'error' : undefined}
-                           statusMessage={passwordInput.errors['required']}>
-                    <Input placeholder='Password' type='password' border='round' size='large'
-                           onBlur={passwordInput.onBlur}
-                           onChange={passwordInput.onChange}
-                           prefix={<Input.IconAffix><LockLocked></LockLocked></Input.IconAffix>}/>
-                </FormField>
+                <BaseFormField labelId='PasswordFormField' placeholder='Password' type='password' border='round'
+                               size='large' input={passwordInput}
+                               prefix={<Input.IconAffix><LockLocked></LockLocked></Input.IconAffix>}></BaseFormField>
             </Box>
 
             <Button type='submit'>Login</Button>
