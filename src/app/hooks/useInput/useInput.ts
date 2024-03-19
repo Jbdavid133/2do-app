@@ -1,4 +1,4 @@
-import {ChangeEvent, FocusEvent, useEffect, useState} from 'react';
+import {ChangeEvent, useEffect, useState} from 'react';
 import {Dictionary, isEmpty, isNil, merge} from 'lodash';
 
 interface UserInputHookProps<T> {
@@ -27,7 +27,7 @@ export const useInput = <T>(props?: UserInputHookProps<T>) => {
         setInputValue($event.target.value.trim() as T);
     };
 
-    const onBlur = (_: FocusEvent<HTMLInputElement>) => {
+    const onBlur = () => {
         setTouched(true);
     };
 
