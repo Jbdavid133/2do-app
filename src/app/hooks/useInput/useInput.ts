@@ -1,15 +1,26 @@
 import isNil from 'lodash/isNil';
 import isEmpty from 'lodash/isEmpty';
 import {ChangeEvent, useEffect, useMemo, useState} from 'react';
+import {Dictionary} from 'lodash';
 
 interface UserInputHookProps<T> {
-    validators?: ((inputValue: T | undefined) => Record<string, string> | null)[];
+    validators?: ((inputValue: T | undefined) => Dictionary<string> | null)[];
 }
 
-export const useInput = <T>(props?: UserInputHookProps<T>) => {
+export interface UseInputHook<T> {
+    isTouched: boolean,
+    value: T | undefined,
+    isValid: boolean | null,
+    errors: Dictionary<string>
+    onBlur: () => void,
+    onChange: (event: ChangeEvent<HTMLInputElement>) => void
+
+}
+
+export const useInput = <T>(props?: UserInputHookProps<T>): UseInputHook<T> => {
     const [inputValue, setInputValue] = useState<T>();
     const [isTouched, setIsTouched] = useState<boolean>(false);
-    const [isValid, setIsValid] = useState<Boolean | null>(null);
+    const [isValid, setIsValid] = useState<boolean | null>(null);
     const [errors, setErrors] = useState<Record<string, string>>({});
 
     useMemo(() => setIsValid(isEmpty(errors)), [errors]);
@@ -31,7 +42,7 @@ export const useInput = <T>(props?: UserInputHookProps<T>) => {
     };
 
     return {
-        onBlur, onChange, value: inputValue, touched: isTouched, isValid, errors
+        onBlur, onChange, value: inputValue, isTouched, isValid, errors
     };
 };
 
