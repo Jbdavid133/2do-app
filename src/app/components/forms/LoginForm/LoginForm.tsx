@@ -2,10 +2,10 @@ import {Box, Button, FormField, Input} from '@wix/design-system';
 import {LockLocked, User} from '@wix/wix-ui-icons-common';
 import {FormEvent} from 'react';
 import {useInput} from '@/app/hooks/useInput/useInput';
-import {FormProps} from '@/app/components/forms/form-props';
+import {FormPropsTypes} from '@/app/components/forms/form-props.types';
 import {Validators} from '@/app/hooks/useInput/validators';
 
-export const LoginForm = ({onSubmit, className}: FormProps<string>) => {
+export const LoginForm = ({onSubmit, className}: FormPropsTypes<string>) => {
     const usernameInput = useInput<string>({
         validators: [
             Validators.Required('Username must be provided'),
