@@ -1,0 +1,18 @@
+.container {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(130deg, #195bbd 33%, #2E8CE8 33%, #2E8CE8 66%, #54BEF4 66%);
+
+  .welcomeCard {
+    width: 40%;
+    padding: 20px;
+    min-width: 300px;
+    backdrop-filter: blur(5px);
+    background: rgba(255 255 255 / 80%);
+
+    .loginForm {
+      width: 70%;
+    }
+  }
+}
+
