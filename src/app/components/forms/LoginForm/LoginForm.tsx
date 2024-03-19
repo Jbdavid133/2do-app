@@ -1,8 +1,9 @@
 import {Box, Button, FormField, Input} from '@wix/design-system';
 import {LockLocked, User} from '@wix/wix-ui-icons-common';
 import {FormEvent} from 'react';
-import {useInput, Validators} from '@/app/hooks/useInput';
+import {useInput} from '@/app/hooks/useInput/useInput';
 import {FormProps} from '@/app/components/forms/form-props';
+import {Validators} from '@/app/hooks/useInput/validators';
 
 export const LoginForm = ({onSubmit, className}: FormProps<string>) => {
     const usernameInput = useInput<string>({
