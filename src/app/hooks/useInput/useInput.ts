@@ -1,5 +1,4 @@
 import isNil from 'lodash/isNil';
-import assign from 'lodash/assign';
 import isEmpty from 'lodash/isEmpty';
 import {ChangeEvent, useEffect, useState} from 'react';
 
@@ -17,7 +16,7 @@ export const useInput = <T>(props?: UserInputHookProps<T>) => {
         if (isTouched && !isNil(props?.validators) && !isEmpty(props.validators)) {
             const validatorsErrors = props.validators.map(validator => validator(inputValue)).filter(Boolean);
 
-            setErrors(assign({}, ...validatorsErrors));
+            setErrors(Object.assign({}, ...validatorsErrors));
         }
     }, [inputValue, isTouched]);
 
