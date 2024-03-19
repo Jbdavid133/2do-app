@@ -5,8 +5,12 @@
     background: linear-gradient(130deg, #195bbd 33%, #2E8CE8 33%, #2E8CE8 66%, #54BEF4 66%);
 }
 
-.container .welcomeCard, .container .welcomeCard .loginForm {
+.container .welcomeCard {
     width: 40%;
+}
+
+.container .welcomeCard .loginForm {
+    width: 70%;
 }
 
 .container .welcomeCard {
