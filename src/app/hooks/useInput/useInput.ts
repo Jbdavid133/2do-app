@@ -22,8 +22,8 @@ export const useInput = <T>(props?: UserInputHookProps<T>) => {
         }
     }, [inputValue, isTouched]);
 
-    const onChange = ($event: ChangeEvent<HTMLInputElement>) => {
-        setInputValue($event.target.value.trim() as T);
+    const onChange = (event: ChangeEvent<HTMLInputElement>) => {
+        setInputValue(event.target.value.trim() as T);
     };
 
     const onBlur = () => {
