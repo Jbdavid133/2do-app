@@ -9,17 +9,17 @@ interface UserInputHookProps<T> {
 
 export const useInput = <T>(props?: UserInputHookProps<T>) => {
     const [inputValue, setInputValue] = useState<T>();
-    const [touched, setTouched] = useState<boolean>(false);
+    const [isTouched, setIsTouched] = useState<boolean>(false);
     const [isValid, setIsValid] = useState<Boolean | null>(null);
     const [errors, setErrors] = useState<Record<string, string>>({});
 
     useEffect(() => {
-        if (touched && !isNil(props?.validators) && !isEmpty(props.validators)) {
+        if (isTouched && !isNil(props?.validators) && !isEmpty(props.validators)) {
             const validatorsErrors = props.validators.map(validator => validator(inputValue)).filter(Boolean);
 
             setErrors(assign({}, ...validatorsErrors));
         }
-    }, [inputValue, touched]);
+    }, [inputValue, isTouched]);
 
     useEffect(() => {
         setIsValid(isEmpty(errors));
@@ -30,11 +30,11 @@ export const useInput = <T>(props?: UserInputHookProps<T>) => {
     };
 
     const onBlur = () => {
-        setTouched(true);
+        setIsTouched(true);
     };
 
     return {
-        onBlur, onChange, value: inputValue, touched, isValid, errors
+        onBlur, onChange, value: inputValue, touched: isTouched, isValid, errors
     };
 };
 
