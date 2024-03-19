@@ -1,6 +1,6 @@
 'use client';
 
-import styles from './page.module.css';
+import styles from './page.module.scss';
 import {Box, Card, Heading, Image} from '@wix/design-system';
 import {LoginForm} from '@/app/components/forms/LoginForm/LoginForm';
 import {useRouter} from 'next/navigation';
@@ -13,8 +13,8 @@ export default function Welcome() {
     };
 
     return (
-        <div className={styles.container}>
-            <Card className={styles.welcomeCard} showShadow={true}>
+        <Box verticalAlign='middle' align='center' className={styles.container}>
+            <Card className={styles.welcomeCard} showShadow={true} stretchVertically={false}>
                 <Box align='center' direction='vertical' gap='40px'>
                     <Image src='/images/logo.png' transparent={true} width='25%' alt='logo-image'/>
 
@@ -26,6 +26,6 @@ export default function Welcome() {
                     <LoginForm onSubmit={handleLogin} className={styles.loginForm}/>
                 </Box>
             </Card>
-        </div>
+        </Box>
     );
 }
