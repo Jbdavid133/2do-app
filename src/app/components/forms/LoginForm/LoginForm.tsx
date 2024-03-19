@@ -17,6 +17,9 @@ export const LoginForm = ({onSubmit, className}: FormProps<string>) => {
     const handleLoginFormSubmit = ($event: FormEvent) => {
         $event.preventDefault();
 
+        usernameInput.onBlur();
+        passwordInput.onBlur();
+
         if (isFormValid) {
             onSubmit(usernameInput.value!);
         }
