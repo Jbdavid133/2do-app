@@ -19,7 +19,7 @@ export interface UseInputHook {
 }
 
 export const useInput = (props?: UserInputHookProps): UseInputHook => {
-    const [inputValue, setInputValue] = useState('');
+    const [inputValue, setInputValue] = useState<string>();
     const [isTouched, setIsTouched] = useState<boolean>(false);
     const [isValid, setIsValid] = useState<boolean | null>(null);
     const [errors, setErrors] = useState<Record<string, string>>({});
