@@ -1,31 +1,41 @@
 import {FormField, FormFieldProps, Input, InputProps} from '@wix/design-system';
-import React from 'react';
+import React, {forwardRef, Ref, useImperativeHandle} from 'react';
+import {useInput} from '@/app/hooks/useInput/useInput';
 import {Validator} from '@/app/hooks/useInput/validators';
-import {UseInputHook} from '@/app/hooks/useInput/useInput';
 
-interface BaseFormFieldProps<T> extends Pick<FormFieldProps, 'labelId'>,
+export interface BaseFormFieldProps extends Pick<FormFieldProps, 'labelId'>,
     Pick<InputProps, 'border' | 'size' | 'type' | 'placeholder' | 'prefix'> {
-    input: UseInputHook<T>;
-    validators?: Validator<T>[];
+    validators: Validator[];
 }
 
-export const BaseFormField = <T, >({
-                                       type,
-                                       size,
-                                       input,
-                                       prefix,
-                                       border,
-                                       labelId,
-                                       placeholder,
-                                   }: BaseFormFieldProps<T>) => {
+export interface BaseFormFieldRef {
+    value: () => string | undefined;
+    isValid: () => boolean | null;
+    isTouched: () => boolean;
+    touch: () => void;
+}
+
+const BaseFormField = (props: BaseFormFieldProps, ref: Ref<BaseFormFieldRef>) => {
+    const input = useInput({validators: props.validators});
     const errorMessage = Object.entries(input.errors)?.[0]?.[1] || '';
 
-    return <FormField labelId={labelId}
+    useImperativeHandle(ref, () => ({
+        value: () => input.value,
+        isValid: () => input.isTouched && input.isValid,
+        isTouched: () => input.isTouched,
+        touch: input.onTouch
+    }));
+
+    return <FormField labelId={props.labelId}
+                      dataHook='BaseFormField'
                       status={!input.isValid ? 'error' : undefined}
                       statusMessage={errorMessage}>
-        <Input placeholder={placeholder} type={type} border={border} size={size}
-               onBlur={input.onBlur}
+        <Input dataHook='BaseFormFieldInput' placeholder={props.placeholder} type={props.type} border={props.border}
+               size={props.size}
+               onBlur={input.onTouch}
                onChange={input.onChange}
-               prefix={prefix}/>
+               prefix={props.prefix}/>
     </FormField>;
 };
+
+export default forwardRef(BaseFormField);
