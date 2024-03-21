@@ -24,18 +24,16 @@ export const LoginForm = ({onSubmit, className}: FormPropsTypes<string>) => {
         }
     };
 
-    return <form onSubmit={handleLoginFormSubmit} className={className}>
+    return <form onSubmit={handleLoginFormSubmit} className={className} aria-label='LoginForm'>
         <Box direction='vertical' gap='40px'>
             <Box direction='vertical' gap='10px'>
                 <BaseFormField labelId='UsernameFormField' placeholder='Username' type='text' border='round'
                                size='large'
-                    //@ts-ignore
                                validators={usernameInputValidators} ref={usernameInputRef}
                                prefix={<Input.IconAffix><User></User></Input.IconAffix>}></BaseFormField>
 
                 <BaseFormField labelId='PasswordFormField' placeholder='Password' type='password' border='round'
                                size='large'
-                    //@ts-ignore
                                validators={passwordInputValidators} ref={passwordInputRef}
                                prefix={<Input.IconAffix><LockLocked></LockLocked></Input.IconAffix>}></BaseFormField>
             </Box>
