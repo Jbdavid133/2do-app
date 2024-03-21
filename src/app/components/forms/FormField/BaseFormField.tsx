@@ -11,7 +11,6 @@ export interface BaseFormFieldProps extends Pick<FormFieldProps, 'labelId'>,
 export interface BaseFormFieldRef {
     value: () => string | undefined;
     isValid: () => boolean | null;
-    isTouched: () => boolean;
     touch: () => void;
 }
 
@@ -22,7 +21,6 @@ const BaseFormField = (props: BaseFormFieldProps, ref: Ref<BaseFormFieldRef>) =>
     useImperativeHandle(ref, () => ({
         value: () => input.value,
         isValid: () => input.isTouched && input.isValid,
-        isTouched: () => input.isTouched,
         touch: input.onTouch
     }));
 
