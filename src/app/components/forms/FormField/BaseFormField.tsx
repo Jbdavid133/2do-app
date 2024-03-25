@@ -6,6 +6,8 @@ import {Validator} from '@/app/hooks/useInput/validators';
 export interface BaseFormFieldProps extends Pick<FormFieldProps, 'labelId'>,
     Pick<InputProps, 'border' | 'size' | 'type' | 'placeholder' | 'prefix'> {
     validators: Validator[];
+    formFieldDataHook?: string;
+    inputDataHook?: string;
 }
 
 export interface BaseFormFieldRef {
@@ -25,10 +27,10 @@ const BaseFormField = (props: BaseFormFieldProps, ref: Ref<BaseFormFieldRef>) =>
     }));
 
     return <FormField labelId={props.labelId}
-                      dataHook='BaseFormField'
+                      dataHook={props.formFieldDataHook}
                       status={!input.isValid ? 'error' : undefined}
                       statusMessage={errorMessage}>
-        <Input dataHook='BaseFormFieldInput' placeholder={props.placeholder} type={props.type} border={props.border}
+        <Input dataHook={props.inputDataHook} placeholder={props.placeholder} type={props.type} border={props.border}
                size={props.size}
                onBlur={input.onTouch}
                onChange={input.onChange}

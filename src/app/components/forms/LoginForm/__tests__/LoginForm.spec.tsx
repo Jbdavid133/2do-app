@@ -1,9 +1,12 @@
 import {beforeEach, describe, expect, it, jest} from '@jest/globals';
 import {LoginFormDriver} from '@/app/components/forms/LoginForm/__tests__/LoginForm.driver';
 import {waitFor} from '@testing-library/react';
+import {Chance} from 'chance';
 
-const USERNAME = 'user@test';
-const PASSWORD = 'Aa123456';
+const chance = new Chance();
+
+const USERNAME = chance.email({length: 10});
+const PASSWORD = chance.string();
 
 describe('Login Form', () => {
     let loginFormDriver: LoginFormDriver;
