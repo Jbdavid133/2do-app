@@ -1,16 +1,16 @@
-import {render, RenderResult} from '@testing-library/react';
+import {render} from '@testing-library/react';
 import BaseFormField, {BaseFormFieldProps} from '@/app/components/forms/FormField/BaseFormField';
-import {FormFieldUniDriver} from '@wix/design-system/dist/types/FormField/FormField.uni.driver';
 import {FormFieldTestkit, InputTestkit} from '@wix/design-system/dist/testkit';
-import {InputUniDriver} from '@wix/design-system/dist/types/Input/Input.uni.driver';
 import {Validator} from '@/app/hooks/useInput/validators';
-import {StatusIndications} from '@wix/design-system';
+import {DataHooks} from '@/app/constants/data-hooks.constants';
 
 export class BaseFormFieldDriver {
-    private wrapper: RenderResult | undefined;
-    private inputDriver: InputUniDriver | undefined;
-    private formFieldDriver: FormFieldUniDriver | undefined;
-    private props: BaseFormFieldProps = {validators: []};
+    private wrapper = render(<></>);
+    private props: BaseFormFieldProps = {
+        validators: [],
+        inputDataHook: DataHooks.Input,
+        formFieldDataHook: DataHooks.FormField,
+    };
 
     given = {
         validators: (validators: Validator[]) => {
@@ -19,30 +19,38 @@ export class BaseFormFieldDriver {
         },
     };
 
+    testkit = {
+        input: (dataHook: string | undefined) => InputTestkit({
+            wrapper: this.wrapper.baseElement,
+            dataHook: dataHook || ''
+        }),
+        formField: (dataHook: string | undefined) => FormFieldTestkit({
+            wrapper: this.wrapper.baseElement,
+            dataHook: dataHook || ''
+        })
+    };
+
     when = {
         rendered: () => {
             this.wrapper = render(<BaseFormField {...this.props}></BaseFormField>);
-            this.formFieldDriver = FormFieldTestkit({wrapper: this.wrapper.baseElement, dataHook: 'BaseFormField'});
-            this.inputDriver = InputTestkit({wrapper: this.wrapper.baseElement, dataHook: 'BaseFormFieldInput'});
             return this;
         },
         focus: async () => {
-            await this.inputDriver?.focus();
-            const a = await this.inputDriver?.isFocus();
+            await this.get.input().focus();
             return this;
         },
         blur: async () => {
-            await this.inputDriver?.blur();
+            await this.get.input().blur();
             return this;
         },
         enterValue: async (value: string) => {
-            await this.inputDriver?.enterText(value);
+            await this.get.input().enterText(value);
             return this;
         }
     };
 
     get = {
-        hasStatus: (status: StatusIndications) => this.formFieldDriver?.hasStatus(status),
-        statusMessage: () => this.formFieldDriver?.getStatusMessage()
+        input: () => this.testkit.input(this.props.inputDataHook),
+        formField: () => this.testkit.formField(this.props.formFieldDataHook)
     };
 }
