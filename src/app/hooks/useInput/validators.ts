@@ -1,6 +1,6 @@
 import {Dictionary, isEmpty, isNil} from 'lodash';
 
-export type Validator<T> = ((inputValue: T | undefined) => Record<string, string> | null)
+export type Validator = ((inputValue: string | undefined) => Dictionary<string> | null)
 
 export namespace Validators {
     export const Required = (message: string) => <T>(value: T): Dictionary<string> | null => {

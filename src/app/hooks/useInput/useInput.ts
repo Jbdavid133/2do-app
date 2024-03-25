@@ -2,23 +2,24 @@ import isNil from 'lodash/isNil';
 import isEmpty from 'lodash/isEmpty';
 import {ChangeEvent, useEffect, useMemo, useState} from 'react';
 import {Dictionary} from 'lodash';
+import {Validator} from '@/app/hooks/useInput/validators';
 
-interface UserInputHookProps<T> {
-    validators?: ((inputValue: T | undefined) => Dictionary<string> | null)[];
+interface UserInputHookProps {
+    validators?: Validator[];
 }
 
-export interface UseInputHook<T> {
+export interface UseInputHook {
     isTouched: boolean,
-    value: T | undefined,
+    value: string | undefined,
     isValid: boolean | null,
     errors: Dictionary<string>
-    onBlur: () => void,
+    onTouch: () => void,
     onChange: (event: ChangeEvent<HTMLInputElement>) => void
 
 }
 
-export const useInput = <T>(props?: UserInputHookProps<T>): UseInputHook<T> => {
-    const [inputValue, setInputValue] = useState<T>();
+export const useInput = (props?: UserInputHookProps): UseInputHook => {
+    const [inputValue, setInputValue] = useState<string>();
     const [isTouched, setIsTouched] = useState<boolean>(false);
     const [isValid, setIsValid] = useState<boolean | null>(null);
     const [errors, setErrors] = useState<Record<string, string>>({});
@@ -26,7 +27,7 @@ export const useInput = <T>(props?: UserInputHookProps<T>): UseInputHook<T> => {
     useMemo(() => setIsValid(isEmpty(errors)), [errors]);
 
     useEffect(() => {
-        if (isTouched && !isNil(props?.validators) && !isEmpty(props.validators)) {
+        if ((isTouched || !isNil(inputValue)) && !isNil(props?.validators) && !isEmpty(props.validators)) {
             const validatorsErrors = props.validators.map(validator => validator(inputValue)).filter(Boolean);
 
             setErrors(Object.assign({}, ...validatorsErrors));
@@ -34,15 +35,15 @@ export const useInput = <T>(props?: UserInputHookProps<T>): UseInputHook<T> => {
     }, [inputValue, isTouched]);
 
     const onChange = (event: ChangeEvent<HTMLInputElement>) => {
-        setInputValue(event.target.value.trim() as T);
+        setInputValue(event.target.value.trim());
     };
 
-    const onBlur = () => {
+    const onTouch = () => {
         setIsTouched(true);
     };
 
     return {
-        onBlur, onChange, value: inputValue, isTouched, isValid, errors
+        onTouch, onChange, value: inputValue, isTouched, isValid, errors
     };
 };
 
