@@ -2,8 +2,13 @@
 
 import './globals.css';
 import {WixDesignSystemProvider} from '@wix/design-system';
+import {TopBar} from '@/app/components/TopBar/TopBar';
+import {usePathname} from 'next/navigation';
 
 export default function RootLayout({children,}: Readonly<{ children: React.ReactNode; }>) {
+    const currentPathname = usePathname();
+    const showTopBar = currentPathname !== '/';
+
     return (
         <html lang='en'>
         <head>
@@ -11,6 +16,7 @@ export default function RootLayout({children,}: Readonly<{ children: React.React
         </head>
         <body>
         <WixDesignSystemProvider>
+            {showTopBar && <TopBar/>}
             {children}
         </WixDesignSystemProvider>
         </body>
