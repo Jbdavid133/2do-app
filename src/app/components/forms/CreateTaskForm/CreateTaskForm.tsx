@@ -2,17 +2,13 @@
 
 import {Box, Button, FormField, Input, RadioGroup} from '@wix/design-system';
 import {DateChecked, Heading, InfoCircle} from '@wix/wix-ui-icons-common';
-import {
-    CreateTaskFormFields,
-    CreateTaskFormProps,
-    TaskPriorities
-} from '@/app/components/forms/CreateTaskForm/CreateTaskForm.types';
+import {CreateTaskFormProps, NewTask, TaskPriorities} from '@/app/components/forms/CreateTaskForm/CreateTaskForm.types';
 import {useFormik} from 'formik';
 import startCase from 'lodash/startCase';
 import {object, string} from 'yup';
 
 export const CreateTaskForm = (props: CreateTaskFormProps) => {
-    const {setFieldValue, values, touched, errors, handleSubmit, handleChange} = useFormik<CreateTaskFormFields>({
+    const {setFieldValue, values, touched, errors, handleSubmit, handleChange} = useFormik<NewTask>({
         initialValues: {
             title: '',
             description: '',
@@ -27,7 +23,7 @@ export const CreateTaskForm = (props: CreateTaskFormProps) => {
                 .required('Please provide a description to the task')
                 .max(50, 'Description can only contain up to 50 characters'),
         }),
-        onSubmit: props.onCreateNewTask
+        onSubmit: props.onSubmit
     });
 
     return <form onSubmit={handleSubmit}>

@@ -3,11 +3,11 @@
 import styles from './page.module.scss';
 import {Box, Card, Page} from '@wix/design-system';
 import {CreateTaskForm} from '@/app/components/forms/CreateTaskForm/CreateTaskForm';
-import {CreateTaskFormFields} from '@/app/components/forms/CreateTaskForm/CreateTaskForm.types';
+import {NewTask} from '@/app/components/forms/CreateTaskForm/CreateTaskForm.types';
 
 const CreateTask = () => {
-    const handleCreateNewTask = (newTask: CreateTaskFormFields) => {
-
+    const handleCreateNewTask = (newTask: NewTask) => {
+        console.log(newTask);
     };
 
     return <Page className={styles.page}>
@@ -18,7 +18,7 @@ const CreateTask = () => {
                     <Card.Header title='Fill in the new task details'
                                  subtitle='Only inputs labeled with * are required'></Card.Header>
                     <Card.Content>
-                        <CreateTaskForm onCreateNewTask={handleCreateNewTask}/>
+                        <CreateTaskForm onSubmit={handleCreateNewTask}/>
                     </Card.Content>
                 </Card>
             </Box>

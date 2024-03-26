@@ -2,7 +2,7 @@ export const TaskPriorities = ['none', 'low', 'medium', 'high'] as const;
 
 export type TaskPriority = typeof TaskPriorities[number]
 
-export interface CreateTaskFormFields {
+export interface NewTask {
     title: string;
     description: string;
     priority: TaskPriority;
@@ -10,5 +10,5 @@ export interface CreateTaskFormFields {
 }
 
 export interface CreateTaskFormProps {
-    onCreateNewTask: (newTask: CreateTaskFormFields) => void;
+    onSubmit: (newTask: NewTask) => void;
 }
