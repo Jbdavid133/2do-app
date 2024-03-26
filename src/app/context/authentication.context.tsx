@@ -3,8 +3,6 @@ import {SessionStorageKey} from '@/app/constants';
 import {redirect, RedirectType, usePathname} from 'next/navigation';
 import isNil from 'lodash/isNil';
 
-//import {redirect, useRouter} from 'next/navigation';
-
 interface AuthenticationState {
     isInitialized: boolean;
     username: string | null;
