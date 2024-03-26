@@ -27,7 +27,7 @@ export const CreateTaskForm = (props: CreateTaskFormProps) => {
                 .required('Please provide a description to the task')
                 .max(50, 'Description can only contain up to 50 characters'),
         }),
-        onSubmit: props.onAddNewTask
+        onSubmit: props.onCreateNewTask
     });
 
     return <form onSubmit={handleSubmit}>

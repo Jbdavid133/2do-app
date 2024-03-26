@@ -10,5 +10,5 @@ export interface CreateTaskFormFields {
 }
 
 export interface CreateTaskFormProps {
-    onAddNewTask: (newTask: CreateTaskFormFields) => void;
+    onCreateNewTask: (newTask: CreateTaskFormFields) => void;
 }
