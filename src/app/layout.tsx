@@ -9,6 +9,15 @@ export default function RootLayout({children,}: Readonly<{ children: React.React
     const currentPathname = usePathname();
     const showTopBar = currentPathname !== '/';
 
+    const childrenDisplay = () => {
+        if (showTopBar) {
+            return <div className='routerOutlet'>
+                {children}
+            </div>;
+        }
+
+        return children;
+    };
     return (
         <html lang='en'>
         <head>
@@ -17,7 +26,7 @@ export default function RootLayout({children,}: Readonly<{ children: React.React
         <body>
         <WixDesignSystemProvider>
             {showTopBar && <TopBar/>}
-            {children}
+            {childrenDisplay()}
         </WixDesignSystemProvider>
         </body>
         </html>
