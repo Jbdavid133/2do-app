@@ -4,11 +4,15 @@ import styles from './page.module.scss';
 import {Box, Card, Heading, Image} from '@wix/design-system';
 import {LoginForm} from '@/app/components/forms/LoginForm/LoginForm';
 import {useRouter} from 'next/navigation';
+import {useContext} from 'react';
+import {AppContext} from '@/app/context/app.context';
 
 export default function Login() {
+    const {setUsername} = useContext(AppContext);
     const router = useRouter();
 
-    const handleLogin = () => {
+    const handleLogin = (username: string) => {
+        setUsername(username);
         router.push('/tasks');
     };
 
