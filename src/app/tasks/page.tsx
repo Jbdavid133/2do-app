@@ -1,3 +1,3 @@
-const Home = () => <span>HELLO</span>;
+const Tasks = () => <span>Should show tasks list here</span>;
 
-export default Home;
+export default Tasks;
