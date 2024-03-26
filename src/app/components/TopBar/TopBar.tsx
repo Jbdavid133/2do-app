@@ -1,19 +1,19 @@
 import React, {useContext} from 'react';
 import styles from './TopBar.module.scss';
 import {Avatar, Box, Cell, Heading, Image, Layout} from '@wix/design-system';
-import {AppContext} from '@/app/context/app.context';
 import {Add, Checklist, Exit} from '@wix/wix-ui-icons-common';
 import {NavigationLinkButton} from '@/app/components/TopBar/NavigationLinkButton/NavigationLinkButton';
+import {AuthenticationContext} from '@/app/context/authentication.context';
 
 export const TopBar = () => {
-    const {username} = useContext(AppContext);
+    const {username} = useContext(AuthenticationContext);
 
     return (
         <Box className={styles.topBar}>
             <Layout alignItems='stretch' rowHeight='50px' className={styles.layout}>
                 <Cell span={2}>
                     <Box verticalAlign='middle' gap='20px' className={styles.box}>
-                        <Image src='/images/logo.png' width='35px' height='30px' alt='App logo'/>
+                        <Image src='/images/logo.png' width='35px' height='30px' alt='App logo' transparent/>
                         <Heading>2Do</Heading>
                     </Box>
                 </Cell>
@@ -31,7 +31,7 @@ export const TopBar = () => {
                 </Cell>
                 <Cell span={2}>
                     <Box align='right' verticalAlign='middle' className={styles.box}>
-                        <Avatar name={username || '?'} color='A1' size='size36' shape='square'></Avatar>
+                        <Avatar name={username ?? ''} color='A1' size='size36' shape='square'></Avatar>
                     </Box>
                 </Cell>
             </Layout>
