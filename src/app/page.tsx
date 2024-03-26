@@ -5,11 +5,11 @@ import {Box, Card, Heading, Image} from '@wix/design-system';
 import {LoginForm} from '@/app/components/forms/LoginForm/LoginForm';
 import {useRouter} from 'next/navigation';
 
-export default function Welcome() {
+export default function Login() {
     const router = useRouter();
 
     const handleLogin = () => {
-        router.push('/home');
+        router.push('/tasks');
     };
 
     return (
