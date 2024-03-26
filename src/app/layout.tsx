@@ -4,6 +4,7 @@ import './globals.css';
 import {WixDesignSystemProvider} from '@wix/design-system';
 import {TopBar} from '@/app/components/TopBar/TopBar';
 import {usePathname} from 'next/navigation';
+import {AuthenticationContextProvider} from '@/app/context/authentication.context';
 
 export default function RootLayout({children,}: Readonly<{ children: React.ReactNode; }>) {
     const currentPathname = usePathname();
@@ -24,10 +25,12 @@ export default function RootLayout({children,}: Readonly<{ children: React.React
             <title>2Do</title>
         </head>
         <body>
-        <WixDesignSystemProvider>
-            {showTopBar && <TopBar/>}
-            {childrenDisplay()}
-        </WixDesignSystemProvider>
+        <AuthenticationContextProvider>
+            <WixDesignSystemProvider>
+                {showTopBar && <TopBar/>}
+                {childrenDisplay()}
+            </WixDesignSystemProvider>
+        </AuthenticationContextProvider>
         </body>
         </html>
     );
