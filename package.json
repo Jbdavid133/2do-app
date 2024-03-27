@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@wix/design-system": "^1.98.3",
+    "classnames": "^2.5.1",
     "formik": "^2.4.5",
     "lodash": "^4.17.21",
     "moment": "^2.30.1",

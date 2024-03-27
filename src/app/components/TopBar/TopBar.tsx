@@ -4,6 +4,7 @@ import {Avatar, Box, Cell, Heading, Image, Layout} from '@wix/design-system';
 import {Add, Checklist, Exit} from '@wix/wix-ui-icons-common';
 import {NavigationLinkButton} from '@/app/components/TopBar/NavigationLinkButton/NavigationLinkButton';
 import {AuthenticationContext} from '@/app/context/authentication.context';
+import classNames from 'classnames';
 
 export const TopBar = () => {
     const {username} = useContext(AuthenticationContext);
@@ -13,12 +14,13 @@ export const TopBar = () => {
             <Layout alignItems='stretch' rowHeight='50px' className={styles.layout}>
                 <Cell span={2}>
                     <Box verticalAlign='middle' gap='20px' className={styles.box}>
-                        <Image src='/images/logo.png' width='35px' height='30px' alt='App logo' transparent/>
+                        <Image src='/images/logo.png' alt='App logo' transparent/>
                         <Heading>2Do</Heading>
                     </Box>
                 </Cell>
                 <Cell span={8}>
-                    <Box align='center' verticalAlign='middle' className={`${styles.box} ${styles.navigationLinks}`}>
+                    <Box align='center' verticalAlign='middle'
+                         className={classNames(styles.box, styles.navigationLinks)}>
                         <NavigationLinkButton className={styles.navigationLink} activeClassName={styles.active}
                                               label='All' href='/tasks'
                                               icon={<Checklist/>}/>
