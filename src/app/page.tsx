@@ -4,12 +4,20 @@ import styles from './page.module.scss';
 import {Box, Card, Heading, Image} from '@wix/design-system';
 import {LoginForm} from '@/app/components/forms/LoginForm/LoginForm';
 import {useRouter} from 'next/navigation';
+import {useContext, useEffect} from 'react';
+import {AuthenticationContext} from '@/app/context/authentication.context';
 
-export default function Welcome() {
+export default function Login() {
+    const {isInitialized, setUsername} = useContext(AuthenticationContext);
     const router = useRouter();
 
-    const handleLogin = () => {
-        router.push('/home');
+    useEffect(() => {
+        isInitialized && setUsername(null);
+    }, [isInitialized, setUsername]);
+
+    const handleLogin = (username: string) => {
+        setUsername(username);
+        router.push('/tasks');
     };
 
     return (

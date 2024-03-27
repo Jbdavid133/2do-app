@@ -1,0 +1,30 @@
+.topBar {
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  padding: 0 20px;
+  position: absolute;
+  background: #ffffff;
+  border-bottom: 1px solid #DFE5EB;
+
+  .layout {
+    width: 100%;
+
+    .box {
+      height: 100%;
+
+      &.navigationLinks {
+        .navigationLink {
+          color: #116DFF;
+          width: 100px;
+          padding: 0 20px;
+
+          &.active {
+            background: #ECEFF3;
+          }
+        }
+      }
+    }
+  }
+}
