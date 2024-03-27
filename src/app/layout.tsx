@@ -1,24 +1,11 @@
 'use client';
 
 import './globals.css';
+import '@wix/design-system/styles.global.css';
 import {WixDesignSystemProvider} from '@wix/design-system';
-import {TopBar} from '@/app/components/TopBar/TopBar';
-import {usePathname} from 'next/navigation';
 import {AuthenticationContextProvider} from '@/app/context/authentication.context';
 
 export default function RootLayout({children,}: Readonly<{ children: React.ReactNode; }>) {
-    const currentPathname = usePathname();
-    const showTopBar = currentPathname !== '/';
-
-    const childrenDisplay = () => {
-        if (showTopBar) {
-            return <div className='routerOutlet'>
-                {children}
-            </div>;
-        }
-
-        return children;
-    };
     return (
         <html lang='en'>
         <head>
@@ -27,8 +14,7 @@ export default function RootLayout({children,}: Readonly<{ children: React.React
         <body>
         <AuthenticationContextProvider>
             <WixDesignSystemProvider>
-                {showTopBar && <TopBar/>}
-                {childrenDisplay()}
+                {children}
             </WixDesignSystemProvider>
         </AuthenticationContextProvider>
         </body>
