@@ -1,4 +1,4 @@
-export namespace SessionStorageKey {
-    export const USERNAME = 'username';
+export namespace LocalStorageKey {
     export const TASKS = 'tasks';
+    export const USERNAME = 'username';
 }

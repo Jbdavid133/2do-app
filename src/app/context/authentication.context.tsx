@@ -1,7 +1,7 @@
 'use client';
 
 import {createContext, ReactNode, useEffect} from 'react';
-import {SessionStorageKey} from '@/app/constants';
+import {LocalStorageKey} from '@/app/constants';
 import {redirect, usePathname} from 'next/navigation';
 import {useStorage} from '@/app/hooks/useStorage/useStorage';
 import isNil from 'lodash/isNil';
@@ -24,7 +24,7 @@ export const AuthenticationContext = createContext<AuthenticationState>(initialS
 
 export const AuthenticationContextProvider = (props: { children: ReactNode | ReactNode[] }) => {
     const pathname = usePathname();
-    const usernameFromStorage = useStorage<string>(SessionStorageKey.USERNAME);
+    const usernameFromStorage = useStorage<string>(LocalStorageKey.USERNAME);
 
     useEffect(() => {
         if (usernameFromStorage.isInitialized) {
