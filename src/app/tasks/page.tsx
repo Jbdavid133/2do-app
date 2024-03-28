@@ -6,7 +6,7 @@ import Link from 'next/link';
 import {TasksList} from '@/app/components/TasksList/TasksList';
 
 const Tasks = () =>
-    <Page className='page' minWidth={200} maxWidth={800} height='100vh'>
+    <Page className='page' minWidth={200} maxWidth={800} height='90vh'>
         <Page.Header title='My Tasks'
                      subtitle='Browse all open tasks, delete and add new ones'
                      actionsBar={
