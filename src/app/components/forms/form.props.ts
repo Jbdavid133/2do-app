@@ -1,4 +1,4 @@
-export interface FormPropsTypes<T> {
+export interface FormProps<T> {
     className?: string;
     onSubmit: ($event: T) => void;
 }

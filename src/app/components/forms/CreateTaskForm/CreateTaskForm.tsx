@@ -9,12 +9,9 @@ import moment from 'moment/moment';
 import isNil from 'lodash/isNil';
 import isEmpty from 'lodash/isEmpty';
 import {NewTask, TaskPriorities, TaskPriorityOrder} from '@/app/tasks/types/task.types';
+import {FormProps} from '@/app/components/forms/form.props';
 
-export interface CreateTaskFormProps {
-    onSubmit: (newTask: NewTask) => void;
-}
-
-export const CreateTaskForm = (props: CreateTaskFormProps) => {
+export const CreateTaskForm = (props: FormProps<NewTask>) => {
     const formik = useFormik<NewTask>({
         initialValues: {
             title: '',
