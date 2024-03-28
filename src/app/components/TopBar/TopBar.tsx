@@ -14,7 +14,7 @@ export const TopBar = () => {
             <Layout alignItems='stretch' rowHeight='50px' className={styles.layout}>
                 <Cell span={2}>
                     <Box verticalAlign='middle' gap='20px' className={styles.box}>
-                        <Image src='/images/logo.png' alt='App logo' transparent/>
+                        <Image src='/images/logo.png' width='40px' alt='App logo' transparent/>
                         <Heading>2Do</Heading>
                     </Box>
                 </Cell>
