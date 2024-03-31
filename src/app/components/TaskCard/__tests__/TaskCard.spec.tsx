@@ -2,7 +2,6 @@ import {beforeEach, describe, expect, it, jest} from '@jest/globals';
 import {TaskCard} from '@/app/components/TaskCard/TaskCard';
 import {TaskCardDriver} from '@/app/components/TaskCard/__tests__/TaskCard.driver';
 import {Chance} from 'chance';
-import {screen} from '@testing-library/dom';
 import moment from 'moment/moment';
 
 describe(TaskCard.name, () => {
@@ -23,8 +22,6 @@ describe(TaskCard.name, () => {
             .given.creationDate(creationDate.toDate())
             .given.endDate(undefined)
             .when.rendered();
-
-        screen.logTestingPlaygroundURL();
 
         await expect(taskCardDriver.get.badge().exists()).resolves.toBeFalsy();
         await expect(taskCardDriver.get.endDateHeading().exists()).resolves.toBeFalsy();
