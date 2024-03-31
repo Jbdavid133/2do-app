@@ -1,9 +1,9 @@
 import {beforeEach, describe, expect, it, jest} from '@jest/globals';
 import {CreateTaskFormDriver} from '@/app/components/forms/CreateTaskForm/__tests__/CreateTaskForm.driver';
 import {ValidationMessage} from '@/app/components/forms/CreateTaskForm/constants/validation-messages.constants';
-import {NewTask, TaskPriority} from '@/app/components/forms/CreateTaskForm/CreateTaskForm.types';
 import {Mock} from 'jest-mock';
 import moment from 'moment/moment';
+import {NewTask, TaskPriority} from '@/app/tasks/types/task.types';
 
 describe('Create task form', () => {
     let onSubmit: Mock;

@@ -1,14 +1,15 @@
 import {act, fireEvent, render} from '@testing-library/react';
-import {CreateTaskFormProps, TaskPriorities} from '@/app/components/forms/CreateTaskForm/CreateTaskForm.types';
 import {CreateTaskForm} from '@/app/components/forms/CreateTaskForm/CreateTaskForm';
 import {FormFieldTestkit, InputTestkit, RadioGroupTestkit} from '@wix/design-system/dist/testkit';
 import {CreateTaskDataHook} from '@/app/components/forms/CreateTaskForm/constants/data-hooks.constants';
 import {Chance} from 'chance';
+import {FormProps} from '@/app/components/forms/form.props';
+import {NewTask, TaskPriorities} from '@/app/tasks/types/task.types';
 
 export class CreateTaskFormDriver {
     private chance = new Chance();
     private wrapper = render(<></>);
-    private props: CreateTaskFormProps = {
+    private props: FormProps<NewTask> = {
         onSubmit: () => {
         }
     };
@@ -20,7 +21,7 @@ export class CreateTaskFormDriver {
     };
 
     given = {
-        onSubmit: (onSubmit: CreateTaskFormProps['onSubmit']) => {
+        onSubmit: (onSubmit: FormProps<NewTask>['onSubmit']) => {
             this.props.onSubmit = onSubmit;
             return this;
         }
