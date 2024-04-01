@@ -1,14 +1,15 @@
 import {act, fireEvent, render} from '@testing-library/react';
-import {CreateTaskFormProps, TaskPriorities} from '@/app/components/forms/CreateTaskForm/CreateTaskForm.types';
 import {CreateTaskForm} from '@/app/components/forms/CreateTaskForm/CreateTaskForm';
 import {FormFieldTestkit, InputTestkit, RadioGroupTestkit} from '@wix/design-system/dist/testkit';
 import {CreateTaskDataHook} from '@/app/components/forms/CreateTaskForm/constants/data-hooks.constants';
-import {Chance} from 'chance';
+import moment from 'moment/moment';
+import {FormProps} from '@/app/components/forms/form.props';
+import {NewTask} from '@/app/tasks/types/task.types';
+import {TaskPriority} from '@/app/tasks/types/task-priority.types';
 
 export class CreateTaskFormDriver {
-    private chance = new Chance();
     private wrapper = render(<></>);
-    private props: CreateTaskFormProps = {
+    private props: FormProps<NewTask> = {
         onSubmit: () => {
         }
     };
@@ -20,7 +21,7 @@ export class CreateTaskFormDriver {
     };
 
     given = {
-        onSubmit: (onSubmit: CreateTaskFormProps['onSubmit']) => {
+        onSubmit: (onSubmit: FormProps<NewTask>['onSubmit']) => {
             this.props.onSubmit = onSubmit;
             return this;
         }
@@ -32,27 +33,25 @@ export class CreateTaskFormDriver {
 
             return this;
         },
-        enterTitle: async (valid = true) => {
-            const title = this.get.randomText(30, valid);
+        enterTitle: async (title: string) => {
             await this.get.titleInput().enterText(title);
 
             return this;
         },
-        enterDescription: async (valid = true) => {
-            const description = this.get.randomText(30, valid);
+        enterDescription: async (description: string) => {
             await this.get.descriptionInput().enterText(description);
 
             return this;
         },
-        enterEndDate: async () => {
-            const date = this.chance.date().toLocaleDateString('en-GB', {});
-            await this.get.endDateInput().enterText(date);
+        enterEndDate: async (endDate: Date) => {
+            const endDateString = moment(endDate).format('yyyy-MM-DD');
+            await this.get.endDateInput().enterText(endDateString);
 
             return this;
         },
-        changePriority: async () => {
-            const priority = this.chance.pickone([...TaskPriorities]);
+        changePriority: async (priority: TaskPriority) => {
             await this.get.priorityRadioGroup().selectByValue(priority);
+
             return this;
         },
         submit: async () => {
@@ -70,11 +69,5 @@ export class CreateTaskFormDriver {
         endDateInput: () => this.testkit.input(CreateTaskDataHook.EndDateInput),
         descriptionInput: () => this.testkit.input(CreateTaskDataHook.DescriptionInput),
         priorityRadioGroup: () => this.testkit.radioGroup(CreateTaskDataHook.PriorityRadioGroup),
-        randomText: (maxLength: number, valid = true) => {
-            const textLength = this.chance.integer({min: 1, max: maxLength});
-            const text = this.chance.string({length: textLength});
-
-            return valid ? text : text.repeat(maxLength);
-        }
     };
 }

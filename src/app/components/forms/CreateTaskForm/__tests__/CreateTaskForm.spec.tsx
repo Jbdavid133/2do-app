@@ -1,11 +1,15 @@
 import {beforeEach, describe, expect, it, jest} from '@jest/globals';
 import {CreateTaskFormDriver} from '@/app/components/forms/CreateTaskForm/__tests__/CreateTaskForm.driver';
 import {ValidationMessage} from '@/app/components/forms/CreateTaskForm/constants/validation-messages.constants';
-import {NewTask, TaskPriority} from '@/app/components/forms/CreateTaskForm/CreateTaskForm.types';
 import {Mock} from 'jest-mock';
+import {Chance} from 'chance';
+import {TaskPriorities} from '@/app/tasks/types/task-priority.types';
+import {NewTask} from '@/app/tasks/types/task.types';
 import moment from 'moment/moment';
 
 describe('Create task form', () => {
+    const chance = new Chance();
+
     let onSubmit: Mock;
     let createTaskFormDriver: CreateTaskFormDriver;
 
@@ -29,7 +33,9 @@ describe('Create task form', () => {
     });
 
     it('Should not call submit when title is too long', async () => {
-        await createTaskFormDriver.when.enterTitle(false);
+        const title = chance.string().repeat(30);
+        await createTaskFormDriver.when.enterTitle(title);
+
         await createTaskFormDriver.when.submit();
 
         expect(onSubmit).not.toHaveBeenCalled();
@@ -39,7 +45,9 @@ describe('Create task form', () => {
     });
 
     it('Should not call submit when description is too long', async () => {
-        await createTaskFormDriver.when.enterDescription(false);
+        const description = chance.string().repeat(50);
+        await createTaskFormDriver.when.enterDescription(description);
+
         await createTaskFormDriver.when.submit();
 
         expect(onSubmit).not.toHaveBeenCalled();
@@ -49,32 +57,39 @@ describe('Create task form', () => {
     });
 
     it('Should call submit with default values', async () => {
-        await createTaskFormDriver.when.enterTitle();
-        await createTaskFormDriver.when.enterDescription();
+        const title = chance.string();
+        await createTaskFormDriver.when.enterTitle(title);
+
+        const description = chance.string();
+        await createTaskFormDriver.when.enterDescription(description);
+
         await createTaskFormDriver.when.submit();
 
-        const expectedResult: NewTask = {
-            priority: 'none',
-            endDate: undefined,
-            title: await createTaskFormDriver.get.titleInput().getValue(),
-            description: await createTaskFormDriver.get.descriptionInput().getValue(),
-        };
+        const expectedResult: NewTask = {title, description, priority: 'none', endDate: undefined};
 
         expect(onSubmit).toHaveBeenCalledWith(expectedResult, expect.anything());
     });
 
     it('Should call submit when all form fields are filled', async () => {
-        await createTaskFormDriver.when.enterTitle();
-        await createTaskFormDriver.when.enterEndDate();
-        await createTaskFormDriver.when.changePriority();
-        await createTaskFormDriver.when.enterDescription();
+        const title = chance.string();
+        await createTaskFormDriver.when.enterTitle(title);
+
+        const endDate = moment(chance.date()).startOf('day').toDate();
+        await createTaskFormDriver.when.enterEndDate(endDate);
+
+        const priority = chance.pickone([...TaskPriorities]);
+        await createTaskFormDriver.when.changePriority(priority);
+
+        const description = chance.string();
+        await createTaskFormDriver.when.enterDescription(description);
+
         await createTaskFormDriver.when.submit();
 
         const expectedResult: NewTask = {
-            title: await createTaskFormDriver.get.titleInput().getValue(),
-            description: await createTaskFormDriver.get.descriptionInput().getValue(),
-            priority: await createTaskFormDriver.get.priorityRadioGroup().getSelectedValue() as TaskPriority,
-            endDate: moment(await createTaskFormDriver.get.endDateInput().getValue(), 'yyyy-MM-DD').toDate(),
+            title,
+            description,
+            priority,
+            endDate
         };
 
         expect(onSubmit).toHaveBeenCalledWith(expectedResult, expect.anything());
