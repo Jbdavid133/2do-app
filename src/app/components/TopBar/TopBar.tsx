@@ -5,6 +5,7 @@ import {Add, Checklist, Exit} from '@wix/wix-ui-icons-common';
 import {NavigationLinkButton} from '@/app/components/TopBar/NavigationLinkButton/NavigationLinkButton';
 import {AuthenticationContext} from '@/app/context/authentication.context';
 import classNames from 'classnames';
+import {Routes} from '@/app/constants';
 
 export const TopBar = () => {
     const {username} = useContext(AuthenticationContext);
@@ -28,7 +29,7 @@ export const TopBar = () => {
                                               label='Create' href='/tasks/create'
                                               icon={<Add/>}/>
                         <NavigationLinkButton className={styles.navigationLink} activeClassName={styles.active}
-                                              label='Logout' href='/' icon={<Exit/>}/>
+                                              label='Logout' href={Routes.Welcome} icon={<Exit/>}/>
                     </Box>
                 </Cell>
                 <Cell span={2}>
