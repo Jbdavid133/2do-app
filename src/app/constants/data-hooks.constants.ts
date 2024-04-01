@@ -1,4 +1,4 @@
-export namespace DataHooks {
-    export const Input = 'Input';
-    export const FormField = 'FormField';
-}
+export const DataHooks = {
+    Input: 'Input',
+    FormField: 'FormField',
+};

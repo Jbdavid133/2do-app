@@ -1,4 +1,5 @@
-export namespace LocalStorageKey {
-    export const TASKS = 'tasks';
-    export const USERNAME = 'username';
-}
+export const LocalStorageKey = {
+    Tasks: 'tasks',
+    Username: 'username',
+};
+
