@@ -29,7 +29,7 @@ export const TasksContext = createContext<TasksState>(initialState);
 
 export const TasksContextProvider = (props: { children: ReactNode | ReactNode[] }) => {
     const {username} = useContext(AuthenticationContext);
-    const tasksFromStorage = useStorage<Record<string, Dictionary<Task>>>(LocalStorageKey.TASKS);
+    const tasksFromStorage = useStorage<Record<string, Dictionary<Task>>>(LocalStorageKey.Tasks);
     const [tasks, setTasks] = useState<TasksState['tasks']>({});
 
     useEffect(() => {

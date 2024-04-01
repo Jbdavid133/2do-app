@@ -3,3 +3,6 @@ export const LocalStorageKey = {
     Username: 'username',
 };
 
+export const Routes = {
+    Welcome: '/'
+};

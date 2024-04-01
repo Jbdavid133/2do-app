@@ -1,7 +1,7 @@
 'use client';
 
 import {createContext, ReactNode, useEffect} from 'react';
-import {LocalStorageKey} from '@/app/constants';
+import {LocalStorageKey, Routes} from '@/app/constants';
 import {redirect, usePathname} from 'next/navigation';
 import {useStorage} from '@/app/hooks/useStorage/useStorage';
 import isNil from 'lodash/isNil';
@@ -24,14 +24,14 @@ export const AuthenticationContext = createContext<AuthenticationState>(initialS
 
 export const AuthenticationContextProvider = (props: { children: ReactNode | ReactNode[] }) => {
     const pathname = usePathname();
-    const usernameFromStorage = useStorage<string>(LocalStorageKey.USERNAME);
+    const usernameFromStorage = useStorage<string>(LocalStorageKey.Username);
 
     useEffect(() => {
         if (usernameFromStorage.isInitialized) {
-            if (pathname === '/') {
+            if (pathname === Routes.Welcome) {
                 usernameFromStorage.removeValue();
             } else if (isNil(usernameFromStorage.value)) {
-                redirect('/');
+                redirect(Routes.Welcome);
             }
         }
     }, [pathname, usernameFromStorage.isInitialized]);
@@ -40,7 +40,7 @@ export const AuthenticationContextProvider = (props: { children: ReactNode | Rea
 
     const logout = () => {
         usernameFromStorage.removeValue();
-        redirect('/');
+        redirect(Routes.Welcome);
     };
 
     return <AuthenticationContext.Provider value={{username: usernameFromStorage.value, logout, login}}>
