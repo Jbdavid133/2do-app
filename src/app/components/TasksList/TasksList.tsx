@@ -1,4 +1,3 @@
-import {TaskPriorityOrder} from '@/app/tasks/types/task.types';
 import {sortBy} from 'lodash';
 import {TaskCard} from '@/app/components/TaskCard/TaskCard';
 import {useContext} from 'react';
@@ -7,6 +6,7 @@ import isEmpty from 'lodash/isEmpty';
 import {EmptyState, TextButton} from '@wix/design-system';
 import {Add, SparklesFilled} from '@wix/wix-ui-icons-common';
 import Link from 'next/link';
+import {TaskPriorityOrder} from '@/app/tasks/types/task-priority.types';
 
 export const TasksList = () => {
     const {removeTask, tasks} = useContext(TasksContext);
