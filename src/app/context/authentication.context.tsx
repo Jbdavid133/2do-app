@@ -1,48 +1,49 @@
-import {createContext, ReactNode, useEffect, useState} from 'react';
-import {SessionStorageKey} from '@/app/constants';
-import {redirect, RedirectType, usePathname} from 'next/navigation';
+'use client';
+
+import {createContext, ReactNode, useEffect} from 'react';
+import {LocalStorageKey, Routes} from '@/app/constants';
+import {redirect, usePathname} from 'next/navigation';
+import {useStorage} from '@/app/hooks/useStorage/useStorage';
 import isNil from 'lodash/isNil';
 
 interface AuthenticationState {
-    isInitialized: boolean;
-    username: string | null;
-    setUsername: (username: AuthenticationState['username']) => void;
+    username: string | undefined;
+    login: (username: string) => void;
+    logout: () => void;
 }
 
 const initialState: AuthenticationState = {
-    username: null,
-    isInitialized: false,
-    setUsername: () => {
+    username: undefined,
+    logout: () => {
     },
+    login: () => {
+    }
 };
 
 export const AuthenticationContext = createContext<AuthenticationState>(initialState);
 
 export const AuthenticationContextProvider = (props: { children: ReactNode | ReactNode[] }) => {
     const pathname = usePathname();
-    const [isInitialized, setIsInitialized] = useState<boolean>(false);
-    const [username, setUsername] = useState<AuthenticationState['username']>(null);
+    const usernameFromStorage = useStorage<string>(LocalStorageKey.Username);
 
     useEffect(() => {
-        setUsername(sessionStorage.getItem(SessionStorageKey.USERNAME));
-        setIsInitialized(true);
-    }, []);
-
-    useEffect(() => {
-        if (isInitialized) {
-            if (isNil(username)) {
-                sessionStorage.removeItem(SessionStorageKey.USERNAME);
-
-                if (pathname !== '/') {
-                    redirect('/', RedirectType.replace);
-                }
-            } else if (!isNil(username)) {
-                sessionStorage.setItem(SessionStorageKey.USERNAME, username);
+        if (usernameFromStorage.isInitialized) {
+            if (pathname === Routes.Welcome) {
+                usernameFromStorage.removeValue();
+            } else if (isNil(usernameFromStorage.value)) {
+                redirect(Routes.Welcome);
             }
         }
-    }, [isInitialized, pathname, username]);
+    }, [pathname, usernameFromStorage.isInitialized]);
 
-    return <AuthenticationContext.Provider value={{username, setUsername, isInitialized}}>
+    const login = (username: string) => usernameFromStorage.setValue(username);
+
+    const logout = () => {
+        usernameFromStorage.removeValue();
+        redirect(Routes.Welcome);
+    };
+
+    return <AuthenticationContext.Provider value={{username: usernameFromStorage.value, logout, login}}>
         {props.children}
     </AuthenticationContext.Provider>;
 };

@@ -1,18 +1,18 @@
 import {fireEvent, render, RenderResult} from '@testing-library/react';
-import {FormPropsTypes} from '@/app/components/forms/form-props.types';
+import {FormProps} from '@/app/components/forms/form.props';
 import {LoginForm} from '@/app/components/forms/LoginForm/LoginForm';
 import React from 'react';
 import isNil from 'lodash/isNil';
 
 export class LoginFormDriver {
     private wrapper: RenderResult | undefined;
-    private props: FormPropsTypes<string> = {
+    private props: FormProps<string> = {
         onSubmit: () => {
         }
     };
 
     given = {
-        onSubmit: (onSubmit: FormPropsTypes<string>['onSubmit']) => {
+        onSubmit: (onSubmit: FormProps<string>['onSubmit']) => {
             this.props.onSubmit = onSubmit;
             return this;
         }

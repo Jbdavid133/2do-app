@@ -1,7 +1,7 @@
 import {Box, Button, Input} from '@wix/design-system';
 import {LockLocked, User} from '@wix/wix-ui-icons-common';
 import {FormEvent, useRef} from 'react';
-import {FormPropsTypes} from '@/app/components/forms/form-props.types';
+import {FormProps} from '@/app/components/forms/form.props';
 import {Validator, Validators} from '@/app/hooks/useInput/validators';
 import BaseFormField, {BaseFormFieldRef} from '@/app/components/forms/FormField/BaseFormField';
 
@@ -9,7 +9,7 @@ const PASSWORD_VALIDATORS: Validator[] = [Validators.Required('Password must be 
 const USERNAME_VALIDATORS: Validator[] = [Validators.Required('Username must be provided'),
     Validators.MaxLength(15, 'Username mast not be longer than 15 characters')];
 
-export const LoginForm = ({onSubmit, className}: FormPropsTypes<string>) => {
+export const LoginForm = ({onSubmit, className}: FormProps<string>) => {
     const usernameInputRef = useRef<BaseFormFieldRef>(null);
     const passwordInputRef = useRef<BaseFormFieldRef>(null);
 
