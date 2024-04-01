@@ -9,7 +9,11 @@ export const useStorage = <T>(key: string) => {
         if (!isInitialized) {
             const valueJsonString = localStorage.getItem(key);
 
-            isNil(valueJsonString) ? setValue(undefined) : setValue(JSON.parse(valueJsonString));
+            try {
+                isNil(valueJsonString) ? setValue(undefined) : setValue(JSON.parse(valueJsonString));
+            } catch (error) {
+                setValue(undefined);
+            }
 
             setIsInitialized(true);
         }
