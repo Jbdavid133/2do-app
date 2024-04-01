@@ -1,27 +1,16 @@
 import styles from './TaskCard.module.scss';
-import {Task, TaskPriority} from '@/app/tasks/types/task.types';
-import {Badge, BadgeSkin, Box, Button, Card, Divider, Heading} from '@wix/design-system';
+import {Task} from '@/app/tasks/types/task.types';
+import {Badge, Box, Button, Card, Divider, Heading} from '@wix/design-system';
 import {DateAndTime, DateChecked, Delete} from '@wix/wix-ui-icons-common';
 import moment from 'moment/moment';
 import isNil from 'lodash/isNil';
+import {TaskPriorityToBadgeSkin} from '@/app/tasks/types/task-priority.types';
 
 interface TaskCardProps {
     task: Task;
     onDelete: () => void;
 }
 
-const getBadgeColorByPriority = (priority: TaskPriority): BadgeSkin | undefined => {
-    switch (priority) {
-        case 'high':
-            return 'danger';
-        case 'medium':
-            return 'warning';
-        case 'low':
-            return 'standard';
-        default:
-            return undefined;
-    }
-};
 export const TaskCard = (props: TaskCardProps) =>
     <Card>
         <Card.Header title={props.task.title} subtitle={props.task.description}
@@ -29,7 +18,7 @@ export const TaskCard = (props: TaskCardProps) =>
                          <Box gap='20px' verticalAlign='middle'>
                              {
                                  props.task.priority !== 'none' &&
-                                 <Badge skin={getBadgeColorByPriority(props.task.priority)}
+                                 <Badge skin={TaskPriorityToBadgeSkin[props.task.priority]}
                                         className={styles.taskBadge}>
                                      {props.task.priority}
                                  </Badge>
