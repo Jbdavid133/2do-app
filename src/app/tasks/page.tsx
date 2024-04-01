@@ -11,7 +11,7 @@ const Tasks = () =>
                      subtitle='Browse all open tasks, delete and add new ones'
                      actionsBar={
                          <Link href='/tasks/create'>
-                             <Button prefixIcon={<Add></Add>}>Create New Task</Button>
+                             <Button prefixIcon={<Add/>}>Create New Task</Button>
                          </Link>
                      }/>
         <Page.Content>
